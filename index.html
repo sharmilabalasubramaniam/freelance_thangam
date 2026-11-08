@@ -229,16 +229,12 @@
     <section class="relative min-h-[85vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden bg-charcoal text-white">
       <!-- Full-bleed Cinematic Background Visual & Video Layer -->
       <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <video autoplay loop muted playsinline poster="/images/hero_fresh_poultry.jpg"
-               id="hero-bg-video"
-               aria-hidden="true"
-               class="w-full h-full object-cover object-center scale-105 transition-opacity duration-1000 filter brightness-[0.42] contrast-[1.12]">
-          <source src="/videos/hero_poultry_farm.webm" type="video/webm">
-          <!-- Static Image Fallback if HTML5 video is unsupported -->
-          <img src="/images/hero_fresh_poultry.jpg" 
-               alt="Fresh wholesale dressed broiler poultry - STP Chickens" 
-               class="w-full h-full object-cover object-center filter brightness-[0.45] contrast-[1.1]">
-        </video>
+        <!-- Full-bleed Cinematic Hero Background Visual Layer -->
+        <div id="hero-bg-visual"
+             aria-hidden="true"
+             class="w-full h-full bg-cover bg-center scale-105 transition-opacity duration-1000 filter brightness-[0.45] contrast-[1.12]"
+             style="background-image: url('/images/hero_fresh_poultry.jpg');">
+        </div>
         <!-- Multi-layer Gradient Overlays for High Contrast Text Readability -->
         <div class="absolute inset-0 bg-gradient-to-r from-deep-green/90 via-deep-green/75 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-black/50"></div>

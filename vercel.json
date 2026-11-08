@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/about-us/AboutUs",
+      "destination": "/about-us/AboutUs.html"
+    },
+    {
+      "source": "/products/Products",
+      "destination": "/products/Products.html"
+    },
+    {
+      "source": "/quality-hygiene/QualityHygiene",
+      "destination": "/quality-hygiene/QualityHygiene.html"
+    },
+    {
+      "source": "/contact-enquiry/ContactEnquiry",
+      "destination": "/contact-enquiry/ContactEnquiry.html"
+    },
+    {
+      "source": "/admin-dashboard/AdminDashboard",
+      "destination": "/admin-dashboard/AdminDashboard.html"
+    },
+    {
+      "source": "/repeat-order/RepeatOrder",
+      "destination": "/repeat-order/RepeatOrder.html"
+    },
+    {
+      "source": "/homepage/Homepage",
+      "destination": "/homepage/Homepage.html"
+    }
+  ]
+}
