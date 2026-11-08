@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /about-us/
+Allow: /products/
+Allow: /quality-hygiene/
+Allow: /contact-enquiry/
+Disallow: /admin-dashboard/
+Disallow: /api/admin/
+Disallow: /server/
+
+Sitemap: https://thangamfarms.in/sitemap.xml
+

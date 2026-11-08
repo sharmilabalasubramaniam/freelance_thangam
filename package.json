@@ -1,0 +1,12 @@
+{
+  "name": "thangamfarms-workspace",
+  "version": "2.0.0",
+  "description": "STP Chickens by Thangam Farms - B2B Wholesale Poultry Website & Admin Portal",
+  "private": true,
+  "scripts": {
+    "start:backend": "cd server && node src/server.js",
+    "start:frontend": "npx serve . -p 3000",
+    "start": "node scripts/startAll.js",
+    "test": "cd server && npm test"
+  }
+}

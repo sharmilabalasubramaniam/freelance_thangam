@@ -1,0 +1,446 @@
+<!DOCTYPE html><html lang="en" class="scroll-smooth"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations Portal — Thangam Farms (STP Chickens)</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'forest-green': '#174B35',
+            'deep-green': '#123B2B',
+            'natural-green': '#397653',
+            'ivory': '#F7F8F4',
+            'warm-gold': '#C5A35B',
+            'charcoal': '#202923',
+            'light-primary': '#174B35',
+            'light-on-primary': '#FFFFFF',
+            'light-primary-container': '#123B2B',
+            'light-on-primary-container': '#86BA9E',
+            'light-secondary': '#397653',
+            'light-on-secondary': '#FFFFFF',
+            'light-secondary-container': '#ADEEC3',
+            'light-on-secondary-container': '#316E4C',
+            'light-tertiary': '#5B4301',
+            'light-on-tertiary': '#FFFFFF',
+            'light-tertiary-container': '#C5A35B',
+            'light-on-tertiary-container': '#261A00',
+            'light-error': '#BA1A1A',
+            'light-on-error': '#FFFFFF',
+            'light-error-container': '#FFDAD6',
+            'light-on-error-container': '#93000A',
+            'light-background': '#F7F8F4',
+            'light-on-background': '#202923',
+            'light-surface': '#FFFFFF',
+            'light-on-surface': '#202923',
+            'light-surface-variant': '#ECEFE6',
+            'light-on-surface-variant': '#404943',
+            'light-outline': '#717973',
+            'light-outline-variant': '#D2D9CE',
+          },
+          borderRadius: {
+            'xs': '2px',
+            'sm': '4px',
+            'DEFAULT': '6px',
+            'md': '8px',
+            'lg': '12px',
+            'xl': '16px',
+            'full': '9999px',
+          },
+          fontFamily: {
+            'headline': ['"Outfit"', 'sans-serif'],
+            'body': ['"Satoshi"', 'sans-serif'],
+          },
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Satoshi';
+      src: local('Satoshi'), local('system-ui'), local('sans-serif');
+      font-weight: 300 700;
+      font-display: swap;
+    }
+    body { font-family: 'Satoshi', system-ui, -apple-system, sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+  </style>
+</head>
+<body class="min-h-[1024px] bg-light-background text-charcoal antialiased flex flex-col selection:bg-forest-green selection:text-white" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- ADMIN TOP APP BAR -->
+  <header class="bg-deep-green text-white px-4 sm:px-6 h-16 flex items-center justify-between border-b border-forest-green sticky top-0 z-40">
+    <div class="flex items-center gap-4 sm:gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-DEFAULT bg-forest-green flex items-center justify-center text-warm-gold font-bold text-lg border border-forest-green/40">
+          TF
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="font-headline font-bold text-base tracking-tight text-white">THANGAM FARMS</span>
+            <span class="px-1.5 py-0.2 text-[9px] font-bold uppercase tracking-wider bg-warm-gold/20 text-warm-gold border border-warm-gold/40 rounded-xs">ADMIN</span>
+          </div>
+          <span class="text-[10px] text-white/60 tracking-wider uppercase font-semibold">Kannampalayam Dispatch Operations</span>
+        </div>
+      </div>
+
+      <div class="hidden md:flex items-center gap-2 pl-6 border-l border-white/10 text-xs text-white/70">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="text-white/60 text-[11px] font-mono">Operations Portal v2.0 Active</span>
+      </div>
+    </div>
+
+    <!-- Right Controls: View Website & Staff Profile -->
+    <div class="flex items-center gap-3 sm:gap-4 text-xs">
+      <a href="../homepage/Homepage.html" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-DEFAULT bg-white/10 hover:bg-white/20 transition-colors text-white">
+        <span class="material-symbols-outlined text-sm">open_in_new</span>
+        <span>View Live Website</span>
+      </a>
+
+      <!-- Logout / Switch Button -->
+      <button id="logoutBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-DEFAULT border border-white/20 hover:bg-white/10 text-white font-medium transition-colors">
+        <span class="material-symbols-outlined text-sm">logout</span>
+        <span>Sign Out</span>
+      </button>
+
+      <div class="flex items-center gap-2.5 pl-3 border-l border-white/10">
+        <div id="staffAvatar" class="w-8 h-8 rounded-full bg-forest-green text-warm-gold font-bold flex items-center justify-center text-xs border border-warm-gold/30">
+          TF
+        </div>
+        <div class="hidden lg:flex flex-col text-left">
+          <span id="staffName" class="font-semibold text-white leading-tight">Operations Desk</span>
+          <span id="staffRole" class="text-[10px] text-white/60">Kannampalayam Manager</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- DASHBOARD WRAPPER -->
+  <div id="dashboardWrapper" class="flex-grow flex flex-col lg:flex-row max-w-[1560px] w-full mx-auto p-4 sm:p-6 lg:p-8 gap-6">
+
+    <!-- LEFT SIDEBAR NAVIGATION (COMPACT & CLEAN) -->
+    <aside class="w-full lg:w-64 flex-shrink-0 bg-white rounded-xl border border-light-outline-variant p-4 space-y-6 shadow-sm self-start">
+      <div>
+        <div class="text-[11px] font-bold uppercase tracking-wider text-light-outline px-3 mb-2">Main Navigation</div>
+        <nav class="space-y-1 text-sm font-medium">
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT bg-forest-green text-white font-semibold shadow-xs">
+            <span class="material-symbols-outlined text-lg">inbox</span>
+            <span>Commercial Enquiries</span>
+          </a>
+          <a href="../contact-enquiry/ContactEnquiry.html" class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-charcoal hover:bg-light-background transition-colors">
+            <span class="material-symbols-outlined text-lg text-light-outline">add_circle</span>
+            <span>New Trade Request</span>
+          </a>
+          <a href="../products/Products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-charcoal hover:bg-light-background transition-colors">
+            <span class="material-symbols-outlined text-lg text-light-outline">inventory_2</span>
+            <span>Product Catalogue</span>
+          </a>
+          <a href="../quality-hygiene/QualityHygiene.html" class="flex items-center gap-3 px-3 py-2.5 rounded-DEFAULT text-charcoal hover:bg-light-background transition-colors">
+            <span class="material-symbols-outlined text-lg text-light-outline">verified_user</span>
+            <span>Hygiene Protocols</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="pt-4 border-t border-light-outline-variant">
+        <div class="text-[11px] font-bold uppercase tracking-wider text-light-outline px-3 mb-2">Facility Quick Info</div>
+        <div class="p-3 bg-light-background rounded-DEFAULT border border-light-outline-variant text-xs space-y-2">
+          <div class="flex justify-between">
+            <span class="text-light-outline">Location:</span>
+            <span class="font-semibold text-charcoal">Kannampalayam</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-light-outline">Operational Mode:</span>
+            <span class="font-semibold text-forest-green">Wholesale B2B Only</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-light-outline">Dispatch Window:</span>
+            <span class="font-semibold text-charcoal">04:00 – 08:30 AM</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <main class="flex-grow space-y-6">
+
+      <!-- TOP SUMMARY CARDS (REAL OVERVIEW METRICS) -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Metric 1: Total Enquiries -->
+        <div class="bg-white p-5 rounded-xl border border-light-outline-variant shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between text-light-outline mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Total Enquiries</span>
+            <span class="material-symbols-outlined text-forest-green text-xl">folder_shared</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="metricTotal" class="text-3xl font-bold font-headline text-charcoal tabular-nums">0</span>
+            <span class="text-xs font-semibold text-forest-green">Stored in database</span>
+          </div>
+          <span class="text-[11px] text-light-outline mt-2">Active commercial leads on file</span>
+        </div>
+
+        <!-- Metric 2: New Enquiries -->
+        <div class="bg-white p-5 rounded-xl border border-forest-green/30 bg-emerald-50/20 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between text-forest-green mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">New Enquiries</span>
+            <span class="material-symbols-outlined text-forest-green text-xl">mark_email_unread</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="metricNew" class="text-3xl font-bold font-headline text-forest-green tabular-nums">0</span>
+            <span class="text-xs font-bold uppercase bg-forest-green/10 text-forest-green px-1.5 py-0.5 rounded-DEFAULT">Needs Action</span>
+          </div>
+          <span class="text-[11px] text-light-outline mt-2">Awaiting procurement contact</span>
+        </div>
+
+        <!-- Metric 3: In Progress Enquiries -->
+        <div class="bg-white p-5 rounded-xl border border-amber-200 bg-amber-50/20 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between text-amber-800 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">In Progress</span>
+            <span class="material-symbols-outlined text-amber-700 text-xl">pending_actions</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="metricPending" class="text-3xl font-bold font-headline text-amber-800 tabular-nums">0</span>
+            <span class="text-xs font-medium text-amber-700">Quotes &amp; Trial batches</span>
+          </div>
+          <span class="text-[11px] text-light-outline mt-2">Under active discussion</span>
+        </div>
+
+        <!-- Metric 4: Completed Enquiries -->
+        <div class="bg-white p-5 rounded-xl border border-light-outline-variant shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between text-light-outline mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Completed</span>
+            <span class="material-symbols-outlined text-forest-green text-xl">verified</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span id="metricCompleted" class="text-3xl font-bold font-headline text-charcoal tabular-nums">0</span>
+            <span class="text-xs font-semibold text-forest-green">Agreements finalized</span>
+          </div>
+          <span class="text-[11px] text-light-outline mt-2">Recurring daily/weekly supply</span>
+        </div>
+      </section>
+
+      <!-- MAIN SPLIT: ENQUIRY MANAGEMENT TABLE & DETAIL INSPECTION PANEL -->
+      <section class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+
+        <!-- ENQUIRY TABLE (8 COLS ON DESKTOP) -->
+        <div class="xl:col-span-8 bg-white rounded-xl border border-light-outline-variant shadow-sm overflow-hidden flex flex-col">
+          <!-- Table Controls Header -->
+          <div class="p-4 sm:p-5 border-b border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-4 bg-light-background/40">
+            <div>
+              <h2 class="text-lg font-bold text-charcoal">Commercial Enquiry Registry</h2>
+              <p class="text-xs text-light-outline">Manage and assign wholesale poultry supply requests</p>
+            </div>
+
+            <!-- Search and Filter Toolbar -->
+            <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
+              <div class="relative flex-grow sm:flex-initial">
+                <span class="material-symbols-outlined absolute left-3 top-2 text-light-outline text-base">search</span>
+                <input type="text" id="tableSearchInput" placeholder="Search buyer, location..." class="pl-8 pr-3 py-1.5 text-xs bg-white border border-light-outline-variant rounded-DEFAULT w-full sm:w-48 focus:border-forest-green focus:outline-none">
+              </div>
+
+              <select id="tableStatusFilter" class="px-2.5 py-1.5 text-xs bg-white border border-light-outline-variant rounded-DEFAULT text-charcoal focus:border-forest-green focus:outline-none">
+                <option value="all">All Statuses</option>
+                <option value="New">New</option>
+                <option value="Contacted">Contacted</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+
+              <input type="date" id="tableDateFilter" title="Filter by submission date" class="px-2 py-1 text-xs bg-white border border-light-outline-variant rounded-DEFAULT text-charcoal focus:border-forest-green focus:outline-none">
+                <a id="exportCsvBtn" href="#" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-forest-green hover:bg-deep-green text-white rounded text-xs font-semibold shadow-xs transition-colors" title="Export Enquiries to CSV">
+                  <span class="material-symbols-outlined text-sm">download</span>
+                  <span>Export CSV</span>
+                </a>
+            </div>
+          </div>
+
+          <!-- Table Container -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-light-background border-b border-light-outline-variant text-charcoal uppercase tracking-wider font-semibold">
+                  <th class="py-3 px-4">Ref ID</th>
+                  <th class="py-3 px-4">Business &amp; Contact</th>
+                  <th class="py-3 px-4">Category &amp; Volume</th>
+                  <th class="py-3 px-4">Status</th>
+                  <th class="py-3 px-4 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="enquiriesTableBody" class="divide-y divide-light-outline-variant/60">
+                <!-- Dynamically populated via dashboard.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="p-4 border-t border-light-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-light-outline">
+            <span id="paginationInfo">Showing 0 of 0 commercial records</span>
+            <div class="flex items-center gap-2">
+              <button id="prevPageBtn" class="px-3 py-1 border border-light-outline-variant rounded-DEFAULT bg-white hover:bg-light-background disabled:opacity-40 transition-colors" disabled>Previous</button>
+              <button id="nextPageBtn" class="px-3 py-1 border border-light-outline-variant rounded-DEFAULT bg-white hover:bg-light-background disabled:opacity-40 transition-colors" disabled>Next</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENQUIRY DETAILS INSPECTION PANEL (4 COLS ON DESKTOP) -->
+        <div class="xl:col-span-4 bg-white rounded-xl border border-light-outline-variant shadow-sm p-6 space-y-6">
+          <div class="flex items-center justify-between border-b border-light-outline-variant pb-4">
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-forest-green">Inspection Panel</span>
+              <h3 id="detailPanelRef" class="text-lg font-bold text-charcoal mt-0.5">Select an Enquiry</h3>
+            </div>
+            <div id="detailPanelStatusBadge"></div>
+          </div>
+
+          <!-- Feedback message banner -->
+          <div id="detailFeedbackBanner" class="hidden"></div>
+
+          <!-- Establishment Profile -->
+          <div class="space-y-3 text-xs">
+            <div>
+              <span class="text-light-outline block text-[11px]">Commercial Entity</span>
+              <span id="detailCustomerEntity" class="font-bold text-charcoal text-sm">—</span>
+              <span id="detailCustomerType" class="text-light-on-surface-variant block">—</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div>
+                <span class="text-light-outline block text-[11px]">Contact Person</span>
+                <span id="detailContactPerson" class="font-semibold text-charcoal">—</span>
+              </div>
+              <div>
+                <span class="text-light-outline block text-[11px]">Designation</span>
+                <span id="detailDesignation" class="font-semibold text-charcoal">Procurement Contact</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div>
+                <span class="text-light-outline block text-[11px]">Direct Phone</span>
+                <span id="detailPhone" class="font-semibold text-charcoal font-mono">—</span>
+                  <div id="customerActionButtons" class="hidden flex items-center gap-1.5 mt-2">
+                    <a id="detailCallLink" href="#" class="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-50 text-forest-green hover:bg-forest-green hover:text-white rounded text-[11px] font-semibold border border-forest-green/20 transition-colors">
+                      <span class="material-symbols-outlined text-xs">call</span>
+                      <span>Call</span>
+                    </a>
+                    <a id="detailWaLink" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 bg-[#25D366]/10 text-emerald-800 hover:bg-[#25D366] hover:text-white rounded text-[11px] font-semibold border border-emerald-300 transition-colors">
+                      <span class="material-symbols-outlined text-xs">chat</span>
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+              </div>
+              <div>
+                <span class="text-light-outline block text-[11px]">Official Email</span>
+                <span id="detailEmail" class="font-semibold text-charcoal truncate block">—</span>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <span class="text-light-outline block text-[11px]">Receiving Bay Address</span>
+              <span id="detailAddress" class="font-semibold text-charcoal">—</span>
+            </div>
+
+            <div class="pt-1">
+              <span class="text-light-outline block text-[11px]">Logged At</span>
+              <span id="detailCreatedAt" class="font-mono text-light-outline text-[11px]">—</span>
+            </div>
+          </div>
+
+          <!-- Product & Volume Request -->
+          <div class="p-4 bg-light-background rounded-DEFAULT border border-light-outline-variant space-y-2 text-xs">
+            <div class="flex justify-between">
+              <span class="text-light-outline">Requested Product:</span>
+              <span id="detailProduct" class="font-bold text-charcoal">—</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-light-outline">Volume Required:</span>
+              <span id="detailQuantity" class="font-bold text-forest-green">—</span>
+            </div>
+          </div>
+
+          <!-- Buyer Message / Notes -->
+          <div>
+            <span class="text-[11px] font-bold text-light-outline uppercase block mb-1">Buyer Specifications &amp; Notes</span>
+            <p id="detailNotes" class="text-xs text-light-on-surface-variant p-3 bg-light-background rounded-DEFAULT border border-light-outline-variant leading-relaxed">
+              Select an enquiry to review notes.
+            </p>
+          </div>
+
+          <!-- Status Management & Actions -->
+          <div class="pt-4 border-t border-light-outline-variant space-y-3">
+            <label for="detailStatusSelect" class="text-xs font-bold uppercase tracking-wider text-charcoal block">
+              Update Status Workflow
+            </label>
+            <select id="detailStatusSelect" class="w-full px-3 py-2 text-xs bg-white border border-light-outline-variant rounded-DEFAULT text-charcoal focus:border-forest-green focus:outline-none">
+              <option value="New">New</option>
+              <option value="Contacted">Contacted</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <button id="detailUpdateStatusBtn" class="w-full py-2.5 bg-forest-green text-white text-xs font-semibold rounded-DEFAULT hover:bg-deep-green disabled:opacity-50 transition-colors">
+                Save Status
+              </button>
+              <button id="detailDeleteBtn" class="w-full py-2.5 bg-white border border-red-200 text-red-600 text-xs font-semibold rounded-DEFAULT hover:bg-red-50 disabled:opacity-50 transition-colors">
+                Delete Record
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- AUTHENTICATION / LOGIN SCREEN OVERLAY -->
+  <div id="loginModal" class="fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl border border-light-outline-variant max-w-md w-full p-8 shadow-2xl relative">
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-DEFAULT bg-forest-green text-warm-gold font-bold text-2xl mx-auto flex items-center justify-center mb-3">
+          TF
+        </div>
+        <h2 class="text-2xl font-bold text-charcoal tracking-tight">Staff Portal Login</h2>
+        <p class="text-xs text-light-outline mt-1">Kannampalayam Facility Management &amp; Dispatch</p>
+      </div>
+
+      <!-- Login error banner -->
+      <div id="loginErrorMsg" class="hidden p-3 rounded-DEFAULT bg-red-50 border border-red-200 text-red-800 text-xs font-semibold mb-4 text-center"></div>
+
+      <form id="adminLoginForm" class="space-y-4">
+        <div class="flex flex-col gap-1.5 text-left">
+          <label for="loginEmail" class="text-xs font-bold uppercase tracking-wider text-charcoal">Employee Email / ID</label>
+          <input type="email" id="loginEmail" required placeholder="admin@thangamfarms.in" class="w-full px-4 py-2.5 text-xs bg-light-background border border-light-outline-variant rounded-DEFAULT text-charcoal focus:border-forest-green focus:bg-white focus:outline-none">
+        </div>
+
+        <div class="flex flex-col gap-1.5 text-left">
+          <div class="flex justify-between items-center">
+            <label for="loginPassword" class="text-xs font-bold uppercase tracking-wider text-charcoal">Access Password</label>
+          </div>
+          <input type="password" id="loginPassword" required placeholder="••••••••••••" class="w-full px-4 py-2.5 text-xs bg-light-background border border-light-outline-variant rounded-DEFAULT text-charcoal focus:border-forest-green focus:bg-white focus:outline-none">
+        </div>
+
+        <button type="submit" id="loginBtn" class="w-full py-3 bg-forest-green text-white font-bold text-xs uppercase tracking-wider rounded-DEFAULT hover:bg-deep-green disabled:opacity-50 transition-colors mt-2">
+          <span id="loginBtnText">Authenticate &amp; Access Operations</span>
+        </button>
+
+        <p class="text-[11px] text-center text-light-outline pt-2">
+          Restricted to authorized personnel of Thangam Farms (STP Chickens).
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Centralized API Service & Dashboard Controller -->
+  <script src="../client/src/services/api.js"></script>
+  <script src="dashboard.js"></script>
+
+</body></html>

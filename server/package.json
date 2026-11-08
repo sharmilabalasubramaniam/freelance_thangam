@@ -1,0 +1,37 @@
+{
+  "name": "thangamfarms-server",
+  "version": "1.0.0",
+  "description": "Backend API for Thangam Farms (STP Chickens) B2B Wholesale Poultry",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test tests/**/*.test.js",
+    "seed:admin": "node scripts/seedAdmin.js",
+    "migrate:mongodb": "node scripts/migrateJsonToMongo.js",
+    "migrate:dry-run": "node scripts/migrateJsonToMongo.js --dry-run"
+  },
+  "keywords": [
+    "poultry",
+    "b2b",
+    "wholesale",
+    "express",
+    "backend",
+    "mongodb"
+  ],
+  "author": "Thangam Farms",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.1",
+    "uuid": "^11.1.0"
+  }
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Repeat Order — STP CHICKENS by Thangam Farms</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'forest-green': '#174B35',
+            'deep-green': '#123B2B',
+            'warm-gold': '#C5A35B',
+            'charcoal': '#202923',
+            'light-background': '#F7F8F4',
+            'light-outline': '#717973',
+            'light-outline-variant': '#D2D9CE'
+          },
+          fontFamily: {
+            'headline': ['"Outfit"', 'sans-serif'],
+            'body': ['"Satoshi"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-light-background text-charcoal font-sans flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-deep-green text-white py-4 px-6 border-b border-forest-green sticky top-0 z-40">
+    <div class="max-w-[1200px] mx-auto flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded bg-forest-green flex items-center justify-center text-warm-gold font-bold text-lg border border-warm-gold/40">
+          TF
+        </div>
+        <div>
+          <span class="font-headline font-bold text-base tracking-tight text-white block">STP CHICKENS</span>
+          <span class="text-[10px] text-warm-gold uppercase tracking-wider font-semibold">Smart Repeat Order Portal</span>
+        </div>
+      </a>
+      <a href="../contact-enquiry/ContactEnquiry.html" class="text-xs text-white/80 hover:text-warm-gold transition-colors flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">arrow_back</span>
+        <span>Back to Website</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-grow max-w-[1000px] w-full mx-auto p-6 sm:p-10 space-y-8">
+    
+    <!-- Title & Verification Box -->
+    <div class="bg-white rounded-xl border border-light-outline-variant p-6 shadow-sm">
+      <h1 class="text-2xl sm:text-3xl font-bold font-headline text-forest-green mb-2">
+        Reorder Verified Wholesale Poultry
+      </h1>
+      <p class="text-xs sm:text-sm text-light-outline leading-relaxed mb-6">
+        Enter your registered 10-digit customer mobile number to load previous confirmed enquiries and initiate a one-click repeat order request with the Kannampalayam dispatch desk.
+      </p>
+
+      <form id="lookupForm" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+        <div class="relative flex-grow">
+          <span class="absolute left-3.5 top-3 text-xs font-bold text-light-outline">+91</span>
+          <input type="tel" id="lookupPhone" required placeholder="98430 XXXXX" class="w-full pl-12 pr-4 py-2.5 bg-light-background border border-light-outline-variant rounded text-sm text-charcoal focus:border-forest-green focus:bg-white focus:outline-none">
+        </div>
+        <button type="submit" id="lookupBtn" class="px-6 py-2.5 bg-forest-green text-white text-xs font-bold uppercase tracking-wider rounded hover:bg-deep-green transition shadow-sm">
+          Load Order History
+        </button>
+      </form>
+    </div>
+
+    <!-- History Container (Hidden until loaded) -->
+    <div id="historyContainer" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-lg font-bold text-charcoal flex items-center gap-2">
+          <span class="material-symbols-outlined text-forest-green">history</span>
+          <span>Your Past Enquiries &amp; Orders</span>
+        </h2>
+        <span id="historyCustomerPhone" class="text-xs font-mono bg-white px-3 py-1 rounded border border-light-outline-variant text-light-outline"></span>
+      </div>
+
+      <div id="ordersList" class="space-y-4"></div>
+    </div>
+
+    <!-- Repeat Order Modal / Dialog -->
+    <div id="repeatModal" class="hidden fixed inset-0 z-50 bg-charcoal/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-white rounded-xl border border-light-outline-variant max-w-lg w-full p-6 shadow-2xl relative">
+        <div class="flex items-center justify-between pb-4 border-b border-light-outline-variant mb-4">
+          <div>
+            <h3 class="font-headline font-bold text-lg text-forest-green">Submit Repeat Order Request</h3>
+            <p class="text-xs text-light-outline">Minimum wholesale batch size: <strong>50 kg</strong></p>
+          </div>
+          <button id="closeModalBtn" class="text-light-outline hover:text-charcoal">
+            <span class="material-symbols-outlined text-xl">close</span>
+          </button>
+        </div>
+
+        <form id="repeatOrderForm" class="space-y-4 text-xs">
+          <input type="hidden" id="modalEnquiryId">
+          <input type="hidden" id="modalPhone">
+          <input type="hidden" id="modalEmail">
+          <input type="hidden" id="modalBusinessName">
+          <input type="hidden" id="modalContactPerson">
+          <input type="hidden" id="modalDeliveryLocation">
+
+          <div>
+            <label class="font-bold text-charcoal block mb-1">Product Line</label>
+            <input type="text" id="modalProductInterest" class="w-full p-2.5 bg-light-background border border-light-outline-variant rounded text-charcoal">
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="font-bold text-charcoal block mb-1">Required Quantity (KG) *</label>
+              <input type="number" id="modalQuantityKg" min="50" step="1" required class="w-full p-2.5 bg-light-background border border-light-outline-variant rounded text-charcoal font-bold">
+              <span class="text-[10px] text-amber-800 font-semibold mt-1 block">Min 50 kg</span>
+            </div>
+            <div>
+              <label class="font-bold text-charcoal block mb-1">Dispatch Window</label>
+              <select id="modalDispatchTime" class="w-full p-2.5 bg-light-background border border-light-outline-variant rounded text-charcoal">
+                <option value="Dawn 04:00 AM - 06:30 AM" selected>Dawn 04:00 AM - 06:30 AM</option>
+                <option value="Morning 07:00 AM - 09:00 AM">Morning 07:00 AM - 09:00 AM</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-bold text-charcoal block mb-1">Cutting &amp; Dressing Notes (Optional)</label>
+            <textarea id="modalCustomerNotes" rows="2" placeholder="e.g. 16-piece curry cut, breast trimming, etc." class="w-full p-2.5 bg-light-background border border-light-outline-variant rounded text-charcoal"></textarea>
+          </div>
+
+          <div class="pt-2">
+            <button type="submit" id="submitRepeatBtn" class="w-full py-3 bg-forest-green hover:bg-deep-green text-white font-bold uppercase tracking-wider rounded transition">
+              Send Repeat Request to Desk
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../client/src/services/api.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lookupForm = document.getElementById('lookupForm');
+      const lookupPhone = document.getElementById('lookupPhone');
+      const historyContainer = document.getElementById('historyContainer');
+      const ordersList = document.getElementById('ordersList');
+      const historyCustomerPhone = document.getElementById('historyCustomerPhone');
+
+      const repeatModal = document.getElementById('repeatModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const repeatOrderForm = document.getElementById('repeatOrderForm');
+
+      let currentCustomer = null;
+
+      const API_BASE = window.API_BASE_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/api' : '/api');
+
+      lookupForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const phone = lookupPhone.value.trim();
+        if (!phone) return;
+
+        try {
+          const res = await fetch(`${API_BASE}/repeat-orders/customer-history?phone=${encodeURIComponent(phone)}`);
+          const data = await res.json();
+
+          if (data && data.success) {
+            currentCustomer = data.data;
+            renderOrders(currentCustomer);
+          } else {
+            alert(data.message || 'No past records found for this phone number.');
+          }
+        } catch (err) {
+          alert('Network connection error: ' + err.message);
+        }
+      });
+
+      function renderOrders(data) {
+        historyContainer.classList.remove('hidden');
+        historyCustomerPhone.textContent = `Phone: +91 ${data.phone}`;
+        ordersList.innerHTML = '';
+
+        const enquiries = data.enquiries || [];
+        if (enquiries.length === 0) {
+          ordersList.innerHTML = '<div class="p-6 bg-white rounded border border-light-outline-variant text-xs text-light-outline text-center">No previous confirmed enquiries found for this number.</div>';
+          return;
+        }
+
+        enquiries.forEach(enq => {
+          const card = document.createElement('div');
+          card.className = 'bg-white p-5 rounded-xl border border-light-outline-variant shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4';
+          
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-bold text-sm text-charcoal font-headline">${enq.businessName || 'Wholesale Buyer'}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-emerald-50 text-forest-green border border-emerald-200">${enq.status}</span>
+                <span class="text-xs text-light-outline font-mono">#${enq.id}</span>
+              </div>
+              <div class="text-xs text-light-outline space-y-0.5">
+                <p><strong>Product:</strong> ${enq.productInterest} &bull; <strong>Quantity:</strong> ${enq.quantity}</p>
+                <p><strong>Delivery Location:</strong> ${enq.deliveryLocation}</p>
+                <p class="text-[11px] text-light-outline/70">Logged: ${new Date(enq.createdAt).toLocaleDateString('en-IN')}</p>
+              </div>
+            </div>
+            <button class="repeat-btn px-4 py-2 bg-warm-gold hover:bg-yellow-400 text-charcoal font-bold text-xs uppercase tracking-wider rounded shadow-xs flex items-center gap-1.5 transition">
+              <span class="material-symbols-outlined text-base">repeat</span>
+              <span>Request This Order Again</span>
+            </button>
+          `;
+
+          const btn = card.querySelector('.repeat-btn');
+          btn.addEventListener('click', () => openRepeatModal(enq));
+          ordersList.appendChild(card);
+        });
+      }
+
+      function openRepeatModal(enq) {
+        document.getElementById('modalEnquiryId').value = enq.id;
+        document.getElementById('modalPhone').value = enq.phone;
+        document.getElementById('modalEmail').value = enq.email || '';
+        document.getElementById('modalBusinessName').value = enq.businessName;
+        document.getElementById('modalContactPerson').value = enq.fullName;
+        document.getElementById('modalDeliveryLocation').value = enq.deliveryLocation;
+        document.getElementById('modalProductInterest').value = enq.productInterest;
+
+        // Parse numerical kg
+        const match = String(enq.quantity).match(/(\d+)/);
+        const kg = match ? Math.max(50, parseInt(match[1], 10)) : 50;
+        document.getElementById('modalQuantityKg').value = kg;
+
+        repeatModal.classList.remove('hidden');
+      }
+
+      closeModalBtn.addEventListener('click', () => {
+        repeatModal.classList.add('hidden');
+      });
+
+      repeatOrderForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          originalEnquiryId: document.getElementById('modalEnquiryId').value,
+          customerPhone: document.getElementById('modalPhone').value,
+          customerEmail: document.getElementById('modalEmail').value,
+          businessName: document.getElementById('modalBusinessName').value,
+          contactPerson: document.getElementById('modalContactPerson').value,
+          productInterest: document.getElementById('modalProductInterest').value,
+          quantity: `${document.getElementById('modalQuantityKg').value} kg`,
+          deliveryLocation: document.getElementById('modalDeliveryLocation').value,
+          requestedDispatchTime: document.getElementById('modalDispatchTime').value,
+          customerNotes: document.getElementById('modalCustomerNotes').value
+        };
+
+        try {
+          const res = await fetch(`${API_BASE}/repeat-orders/request`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const result = await res.json();
+          if (result && result.success) {
+            alert(`Repeat order request registered successfully (#${result.data.id})! Our Kannampalayam dispatch desk will review current bird rates and prepare your quotation within 2 hours.`);
+            repeatModal.classList.add('hidden');
+          } else {
+            alert(result.message || 'Failed to submit repeat order request.');
+          }
+        } catch (err) {
+          alert('Network submission error: ' + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

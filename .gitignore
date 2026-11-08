@@ -1,0 +1,19 @@
+# Environment and secrets
+.env
+.env.local
+server/.env
+
+# Local data & backups
+server/data/*.json
+!server/data/.gitkeep
+backups/
+
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
